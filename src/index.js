@@ -4,10 +4,12 @@ const port = 3001;
 const axios = require("axios");
 
 app.get('/', (req, res) => {
+    console.log('GET /');
     res.send('Hello World!');
 });
 
 app.get('/todos', (req, res) => {
+    console.log('GET /todos - hi');
     axios.get("https://jsonplaceholder.typicode.com/todos", {
         headers: {
             Accept: 'application/json',
