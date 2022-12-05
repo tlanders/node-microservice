@@ -9,7 +9,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/todos', (req, res) => {
-    console.log('GET /todos - hi');
+    console.log('GET /todos');
     axios.get("https://jsonplaceholder.typicode.com/todos", {
         headers: {
             Accept: 'application/json',
