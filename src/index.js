@@ -19,8 +19,20 @@ function authRouter() {
     return authRouter;
 }
 
+function authMiddleware(req, res, next) {
+    const auth = req.headers.authorization;
+    const decoded = jwt.verify(auth, SECRET_KEY);
+    console.log('Decoded user: ' + decoded.email);
+    if(decoded && decoded.email) {
+        next();
+    } else {
+        res.status(401).send({message: 'Unauthorized request.'});
+    }
+}
+
 function todoRouter() {
     const todoRouter = express.Router();
+    todoRouter.use(authMiddleware);
     todoRouter.get('/', (req,res) => {
         console.log('GET /todos');
         axios.get("https://jsonplaceholder.typicode.com/todos", {
