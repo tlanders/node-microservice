@@ -8,6 +8,42 @@ const SECRET_KEY = 'my_secret_isnt_very_good';
 const router = express.Router();
 app.use(express.json());
 
+const cors = require('cors');
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
+
+const somePeople = [
+    {
+        'id': '1',
+        'name': 'Bob Jones',
+        'phone': '3334445555',
+        'email': 'bobjones@gmail.com'
+    },
+    {
+        'id': '2',
+        'name': 'Jane Doe',
+        'phone': '4445556666',
+        'email': 'jane@doe.com'
+    },
+    {
+        'id': '3',
+        'name': 'Sam Sneed',
+        'phone': '2345678901',
+        'email': 'sammysneed@gmail.com'
+    },
+];
+
+function peopleRouter() {
+    const peopleRouter = express.Router();
+    peopleRouter.get('/', (req, res) => {
+        console.log('GET people');
+        res.status(200).send(somePeople);
+    });
+
+    return peopleRouter;
+}
+
 function authRouter() {
     const authRouter = express.Router();
     authRouter.post('/key', (req,res) => {
@@ -67,6 +103,7 @@ app.get('/', (req, res) => {
 app.use('/v1', router);
 router.use('/auth', authRouter());
 router.use('/todos', todoRouter());
+router.use('/people', peopleRouter());
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
