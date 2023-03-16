@@ -40,7 +40,16 @@ function peopleRouter() {
         console.log('GET people');
         res.status(200).send(somePeople);
     });
-
+    peopleRouter.get('/:id', (req, res) => {
+        const id = req.params.id;
+        console.log('GET person id:', id);
+        const person = somePeople.find(p => p.id === id);
+        if(person) {
+            res.status(200).send(person);
+        } else {
+            res.status(404).send({'message':'Person not found'});
+        }
+    });
     return peopleRouter;
 }
 
